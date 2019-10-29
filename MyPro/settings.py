@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'MyPro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ashoksession',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
+        'NAME': 'my_pro_dev',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     },
@@ -165,4 +165,3 @@ CELERYBEAT_SCHEDULE = {
         'schedule': timedelta(days=91),
     }
 }
-
