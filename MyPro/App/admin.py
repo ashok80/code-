@@ -1,9 +1,7 @@
 from django.contrib import admin
 from . import models
 # from App import models
-from App.models import Products
-from App.models import Supplier
-from App.models import UserProfile, PasswordResetHistory
+from App.models import (Products, Supplier, UserProfile, PasswordResetHistory, Role, Organization)
 # from App.models import Account
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -31,10 +29,16 @@ class CustomUserAdmin(UserAdmin):
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'role', 'OrgName')
+    fields = ('user', 'role', 'OrgName')
 
+    
 admin.site.register(Supplier)
 admin.site.register(Products)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Role)
+admin.site.register(Organization)
 admin.site.register(PasswordResetHistory)
 
 

@@ -1,3 +1,4 @@
+
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import models
 from django.contrib.auth.models import User
@@ -106,13 +107,33 @@ class Products(models.Model):
 #         return True
 
 
+class Role(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return "%#s %s" % (self.id, self.name)
+
+    class Meta:
+        verbose_name = "Role"
+        verbose_name_plural = "Roles"
+
+
+class Organization(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return "%#s %s" % (self.id, self.name)
+
+    class Meta:
+        verbose_name = "Organization"
+        verbose_name_plural = "Organizatios"
 
 class UserProfile(models.Model):
+    
     user = models.OneToOneField(User, on_delete='CASCADE')
     location = models.CharField(max_length=100, default='', null=True, blank=True)
-    OrgName = models.CharField(max_length=100, default='', null=True, blank=True)
-    role = models.CharField(max_length=100,default='', null=True, blank=True)
-
+    role = models.ForeignKey(Role, related_name="user_profiles", null=True, blank=True, on_delete=models.CASCADE)
+    OrgName = models.ForeignKey(Organization, related_name="user_profiles", null=True, blank=True, on_delete=models.CASCADE)
     failed_login_attempts = models.IntegerField('Failure Attempts', default=0, validators=[MaxValueValidator(10)])
     is_suspended = models.BooleanField(null=True, blank=True, default=False)
     last_suspended = models.DateTimeField(null=True, blank=True)
