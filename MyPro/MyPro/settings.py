@@ -40,11 +40,10 @@ INSTALLED_APPS = [
     'App',
     'crispy_forms',
     'djcelery',
+    'django_celery_results',
 ]
 
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = 'django://'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,9 +83,9 @@ WSGI_APPLICATION = 'MyPro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ashoksession',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
+        'NAME': 'my_pro_dev',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     },
@@ -152,17 +151,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 
-CELERY_IMPORTS = ['MyPro.tasks']
+# CELERY STUFF
 
-CELERYBEAT_SCHEDULE = {
-    'unexpire-every-5-minutes': {
-        'task': 'MyPro.tasks.add',
-        'schedule': timedelta(seconds=5),
-    },
-
-    'suspend-user-after-3-months': {
-        'task': 'App.tasks.expire_inactive-users',
-        'schedule': timedelta(days=91),
-    }
-}
-
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers:DatabaseScheduler'
