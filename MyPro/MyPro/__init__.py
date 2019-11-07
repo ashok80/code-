@@ -9,5 +9,5 @@ def file_main():
     print("running celery app")
     celery_app.start(['celery', '-A', 'MyPro', 'beat'])
 
-x = threading.Thread(target=file_main, daemon=True)
-x.start()
+# x = threading.Thread(target=file_main, daemon=True)
+# x.start()
