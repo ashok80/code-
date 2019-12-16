@@ -129,7 +129,6 @@ class Organization(models.Model):
         verbose_name_plural = "Organizatios"
 
 class UserProfile(models.Model):
-    
     user = models.OneToOneField(User, on_delete='CASCADE')
     location = models.CharField(max_length=100, default='', null=True, blank=True)
     role = models.ForeignKey(Role, related_name="user_profiles", null=True, blank=True, on_delete=models.CASCADE)

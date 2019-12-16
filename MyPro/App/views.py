@@ -16,6 +16,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth import login
 from django.utils import timezone
 from django.utils.crypto import get_random_string
+from django.views import View
 
 
 def signup(request):
@@ -282,3 +283,25 @@ def confirm_password_hash(request):
                 'user': email
             }
             return render(request, 'accounts/confirm_password_hash.html', context=res)
+
+
+class UnBanUser(View):
+    template_name = "unban-users.html"
+
+    def get(self, request):
+        data = UserProfile.objects.filter(is_suspended=True)
+        return render(request, self.template_name, context={'rows': data})
+
+    def post(self, request):
+        unban = request.POST.getlist('unban')
+        users = request.POST.getlist('user')
+        print(unban)
+        print(users)
+        try:
+            up = UserProfile.objects.filter(user__in=users)
+            for u in up:
+                u.is_suspended = False
+                u.save()
+        except Exception as e:
+            print(e)
+        return redirect('/unban-user')

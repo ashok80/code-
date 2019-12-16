@@ -29,4 +29,5 @@ urlpatterns = [
     # url(r'^password/$', views.change_password, name='change_password'),
     url(r'^password/', views.change_password, name='password'),
     url(r'^confirm-password-hash/', views.confirm_password_hash, name='confirm-password-hash'),
+    url('unban-user', views.UnBanUser.as_view(), name='unban-user'),
 ]
