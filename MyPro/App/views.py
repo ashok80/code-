@@ -17,6 +17,7 @@ from django.contrib.auth import login
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.views import View
+from django.core.mail import send_mail
 
 
 def signup(request):
@@ -82,7 +83,18 @@ def user_login(request):
                     user_profile.failed_login_attempts = 0
                     user_profile.is_suspended = True
                     user_profile.last_suspended = timezone.now()
+                    hash = get_random_string(length=32)
+                    user_profile.forgot_password_hash = hash
                     user_profile.save()
+                    # here bro 
+                    send_mail(
+                        'Password reset link', # emaill subject
+                        'http://site.com/confirm-password-hash?hash={}&email={}'.format(hash, user_profile.user.email),  # email body
+                        'management@company.com', # email from 
+                        [user_profile.user.email], # Email to 
+                        fail_silently = False # True for production False for debugging
+                    )
+
                     errors = [
                         'Your account has been temporarly suspended due to too many failed login attempts.'
                     ]
