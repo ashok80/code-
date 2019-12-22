@@ -1,0 +1,186 @@
+{% extends 'tabledata/base.html' %}           
+{% load staticfiles %}
+{% load utils %}
+{% block content %}
+<style>
+input[readonly='readonly'], input[type=text]{
+  background-color: #d6d6c2;
+}
+#location-data {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+</style>
+<div class="text-center alert alert-primary" role="alert">
+    BH GM DOCK EDIT
+</div>
+<form method="post" action="">
+    {{form.errors}}
+    {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>Location</label><br>
+                <input type="text" data-toggle="modal" data-target="#myModal"><i data-toggle="modal" data-target="#myModal" class="fas fa-external-link-alt"></i>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Billing Cisco</label><br>
+                {{form.billing_cisco}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Location Code</label><br>
+                {{form.location_code}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Duns</label><br>
+                {{form.duns}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Facility Name</label>
+                {{form.facility_name}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>City </label><br>
+                {{form.city}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>State</label><br>
+                {{form.state}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Zip Code</label><br>
+                {{form.zip_code}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Dock Code</label><br>
+                {{form.dock_code}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Simplified Dock</label><br>
+                {{form.simplified_dock}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Number of Shifts</label><br>
+                {{form.no_of_shifts}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Drop Deck Allowed</label><br>
+                {{form.drop_deck_allowed_yn}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Dock Bumps Allowed</label><br>
+                {{form.dock_bump_yn}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Max Dock Bumps Allowed</label><br>
+                {{form.max_dock_bumps_allowed}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Notes</label><br>
+                {{form.notes}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>CO Locate</label><br>
+                {{form.co_locate}}
+            </div>
+            <div class="form-group col-md-3">
+                <label>Source</label><br>
+                {{form.source}}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+{#        <button type="reset" class="btn btn-danger">Cancel</button>#}
+         <a class="btn btn-danger" href="/tabledata">
+            Cancel
+        </a>
+        <hr class='bold-hr'>
+</form>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Select Location</h4>
+        <button id="search-button" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+          <div id="location-data" class="container table-responsive">
+              <table class="table table-striped table-bordered nowrap" id="location-data-table">
+              </table>
+          </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+		$(document).ready(function() {
+				var show_students = $("#location-data-table");
+				console.log(show_students);
+				show_students.DataTable({
+					"processing": true,
+					"serverSide": false,
+					"ajax": {
+						"url": '/tabledata/search-location',
+						dataSrc: "",
+					},
+					"columns": [
+						{
+							"title": "Location ID",
+							"data": "fields.locationid",
+							render: function(row){
+								return `<a href="/to-some-place-/${row}">${row}</a>`
+							}
+						},
+                        {
+                            "title": "City",
+                            "data": "fields.city",
+                        },
+                        {
+                            "title": "State",
+                            "data": "fields.state",
+                        },
+                        {
+                            "title": "Duns",
+                            "data": "fields.duns",
+                        },
+                        {
+                            "title": "Billing Cisco",
+                            "data": "fields.billing_cisco",
+                        },
+                        {
+                            "title": "Location Code",
+                            "data": "fields.locode",
+                        },
+						{
+							"title": "Status",
+							"render": function(data, type, row){
+                                return `<button onclick="fillData('${row.fields.city}', '${row.fields.state}', '${row.fields.duns}', '${row.fields.billing_cisco}', '${row.fields.locode}');">Select</button>`
+							}
+						},
+					],
+				});
+		});
+
+        function fillData(city, state, duns, billing_cisco, locode){
+            console.log(duns, city, state, billing_cisco, locode);
+            $("#id_city").val(city)
+            $("#id_state").val(state)
+            $("#id_location_code").val(locode)
+            $("#id_billing_cisco").val(billing_cisco)
+            $("#id_duns").val(duns)
+        }
+    </script>
+{% endblock %}
+

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'djcelery',
     'django_celery_results',
+    'tabledata',
 ]
 
 
@@ -83,9 +84,9 @@ WSGI_APPLICATION = 'MyPro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_pro_dev',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
+        'NAME': 'ashok_mypro_dev',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     },

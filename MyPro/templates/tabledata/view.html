@@ -1,0 +1,81 @@
+{% extends 'tabledata/base.html' %}           
+{% load utils %}
+{% block content %}
+<div class="text-center alert alert-primary" role="alert">
+    BH GM DOCK VIEW
+</div>
+    <a href="/tabledata/add" class="btn btn-success pull-right">
+        Add
+    </a>
+    <br>
+    <hr class='bold-hr'>
+    {% for row in rows %}
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>Billing Cisco</label><br>
+                <input type="text" value="{{row|get_item:'billing_cisco'}}" readonly="readonly">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Location Code</label><br>
+                <input type="text" value='{{row|get_item:"location_code"}}' readonly="readonly">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Duns</label><br>
+                <input type="text" value='{{row|get_item:"duns"}}' readonly="readonly">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Facility Name</label>
+                <input type="text" value='{{row|get_item:"facility_name"}}' readonly="readonly">
+            </div>
+            <div class="form-group col-md-3">
+                <label>City </label><br>
+                <input type="text" value='{{row|get_item:"city"}}' readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>State</label><br>
+                <input type="text" value='{{row|get_item:"state"}}' readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Zip Code</label><br>
+                <input type="text" value='{{row|get_item:"zip_code"}}' readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Dock Code</label><br>
+                <input type="text" value="{{row|get_item:"dock_code"}}" name="dock_code" required readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Simplified Dock</label><br>
+                <input type="text" value="{{row|get_item:"simplified_dock"}}" name="simplified_dock" readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Number of Shifts</label><br>
+                    <input type='text' value='{{row|get_item:"no_of_shifts"}}' readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Drop Deck Allowed</label><br>
+                <input type='text' value='{{row|get_item:"drop_deck_allowed_yn"}}' readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Dock Bumps Allowed</label><br>
+                <input type='text' value='{{row|get_item:"dock_bump_yn"}}' readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Max Dock Bumps Allowed</label><br>
+                <input type="text" name="max_dock_bumps_allowed" value='{{row|get_item:"max_dock_bumps_allowed"}}' placeholder="Max Dock Bumps Allowed" readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Notes</label><br>
+                <input type="text" name="notes" value='{{row|get_item:"notes"}}'  placeholder="Notes" readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>CO Locate</label><br>
+                <input type="text" name="co_locate" value='{{row|get_item:"co_locate"}}' placeholder="Co Locate" readonly='readonly'>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Source</label><br>
+                <input type="text" name="source" value='{{row|get_item:"source"}}' placeholder="Source" readonly='readonly'>
+            </div>
+        </div>
+        <hr class='bold-hr'>
+    {% endfor %}
+{% endblock %}
