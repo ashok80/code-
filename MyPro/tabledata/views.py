@@ -108,7 +108,8 @@ class EditBHGMDock(View):
             location_id = request.POST.get("location-id")
             location_model_instance = None
             try:
-                location_model_instance = Location.objects.get(locationid=location_id)
+                if location_id:
+                    location_model_instance = Location.objects.get(locationid=location_id)
             except Location.DoesNotExist:
                 print("Location does not exists with the {} locationid".format(location_id))
 
