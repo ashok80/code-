@@ -87,18 +87,25 @@ input[readonly='readonly'], input[type=text]{
                 {{form.source}}
             </div>
         </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+    {#        <button type="reset" class="btn btn-danger">Cancel</button>#}
+             <a class="btn btn-danger" href="/tabledata">
+                Cancel
+            </a>
+        <hr class='bold-hr'>
             <div>
                 <label>Dock Constraints</label><br>
                 {% for dock in similar_docks %}
                 <input name="dock-constraint" id="dock-constraint" type="checkbox"  value="{{dock.bh_gm_dock_id}}">&nbsp; {{dock.bh_gm_dock_id}} &nbsp;
                 {% endfor%}
             </div>
-        <button type="submit" class="btn btn-success">Submit</button>
-{#        <button type="reset" class="btn btn-danger">Cancel</button>#}
-         <a class="btn btn-danger" href="/tabledata">
-            Cancel
-        </a>
-        <hr class='bold-hr'>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Save</button>
+    {#        <button type="reset" class="btn btn-danger">Cancel</button>#}
+             <a class="btn btn-danger" href="/tabledata">
+                Cancel
+            </a>
+        </div>
 </form>
 <!-- The Modal -->
 <div class="modal" id="myModal">
