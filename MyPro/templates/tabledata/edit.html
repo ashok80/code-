@@ -90,7 +90,7 @@ input[readonly='readonly'], input[type=text]{
             <div>
                 <label>Dock Constraints</label><br>
                 {% for dock in similar_docks %}
-                <input id="dock-contraint" type="checkbox"  value="{{dock.bh_gm_dock_id}}">&nbsp; {{dock.bh_gm_dock_id}} &nbsp;
+                <input name="dock-constraint" id="dock-constraint" type="checkbox"  value="{{dock.bh_gm_dock_id}}">&nbsp; {{dock.bh_gm_dock_id}} &nbsp;
                 {% endfor%}
             </div>
         <button type="submit" class="btn btn-success">Submit</button>

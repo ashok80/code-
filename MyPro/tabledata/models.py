@@ -87,10 +87,6 @@ class Location(models.Model):
         verbose_name = "Location"
         verbose_name_plural = "Locations"
 
-    def save(self, *args, **kwargs):
-        self.locationid = self.location_id
-        super(Location, self).save(*args, **kwargs)
-
 
 class DQ_FAILURE(models.Model):
     dq_failure_id = models.AutoField(primary_key=True)
@@ -114,3 +110,11 @@ class DQ_FAILURE(models.Model):
 
     def __str__(self):
         return "{}".format(self.batchid)
+
+
+class BH_GM_Constraint_Dock(models.Model):
+    bh_origin_id = models.ForeignKey(BH_GM_DOCK, on_delete=models.CASCADE)
+    bh_compatible_dock_id = models.IntegerField()
+
+    def __str__(self):
+        return "Origin - {} | compatible {}".format(self.bh_origin_id, self.bh_compatible_dock_id)

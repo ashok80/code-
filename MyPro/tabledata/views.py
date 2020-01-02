@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.views import View
 from django.shortcuts import render, redirect, HttpResponse, render_to_response
 from django.http import HttpResponse
-from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE
+from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE, BH_GM_Constraint_Dock
 from tabledata.forms import BHGMDOCKForm
 from django.core import serializers
 
@@ -77,6 +77,7 @@ class EditBHGMDock(View):
             data = BH_GM_DOCK.objects.get(bh_gm_dock_id=id)
             form = BHGMDOCKForm(instance=data)
 
+            dock_with_same_location = None
             if data.location:
                 try:
                     dock_with_same_location = BH_GM_DOCK.objects.filter(location=data.location)
@@ -105,6 +106,7 @@ class EditBHGMDock(View):
                 dock_bump_yn = None
 
             location_id = request.POST.get("location-id")
+            location_model_instance = None
             try:
                 location_model_instance = Location.objects.get(locationid=location_id)
             except Location.DoesNotExist:
@@ -128,6 +130,13 @@ class EditBHGMDock(View):
             model_instance.notes=request.POST.get('notes')
             model_instance.co_locate=request.POST.get('co_locate')
             model_instance.save()
+
+            compatibles = list(request.POST.getlist('dock-constraint'))
+            model_instance = BH_GM_DOCK.objects.get(bh_gm_dock_id=id)
+
+            for compatible in compatibles:
+                BH_GM_Constraint_Dock.objects.create(bh_origin_id=model_instance, bh_compatible_dock_id=compatible)
+
             return redirect("/tabledata")
         else:
             return render_to_response(self.template_name, {'form': form})
