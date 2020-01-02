@@ -18,10 +18,10 @@ from django.urls import path
 from tabledata.views import Home, DownloadDQFaliure, EditBHGMDock, AddBHGMDock, ViewBHGMDock, SearchLocation
 
 urlpatterns = [
-    path('/', Home.as_view()),
-    path('/edit/<int:id>/', EditBHGMDock.as_view(), name='edit_view'),
-    path('/add/', AddBHGMDock.as_view(), name='add_view'),
-    path('/view/<int:id>/', ViewBHGMDock.as_view(), name='view_view'),
-    path('/search-location/', SearchLocation.as_view(), name='location-search'),
-    path('/dq-download/', DownloadDQFaliure.as_view()),
+    path('', Home.as_view()),
+    path('edit/<int:id>/', EditBHGMDock.as_view(), name='edit_view'),
+    path('add/', AddBHGMDock.as_view(), name='add_view'),
+    path('view/<int:id>/', ViewBHGMDock.as_view(), name='view_view'),
+    path('search-location/', SearchLocation.as_view(), name='location-search'),
+    path('dq-download/', DownloadDQFaliure.as_view()),
 ]

@@ -20,7 +20,7 @@ input[readonly='readonly'], input[type=text]{
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>Location</label><br>
-                <input type="text" data-toggle="modal" data-target="#myModal"><i data-toggle="modal" data-target="#myModal" class="fas fa-external-link-alt"></i>
+                <input name="location-id" id="location-id" type="text" data-toggle="modal" data-target="#myModal"><i data-toggle="modal" data-target="#myModal" class="fas fa-external-link-alt"></i>
             </div>
             <div class="form-group col-md-3">
                 <label>Billing Cisco</label><br>
@@ -87,6 +87,12 @@ input[readonly='readonly'], input[type=text]{
                 {{form.source}}
             </div>
         </div>
+            <div>
+                <label>Dock Constraints</label><br>
+                {% for dock in similar_docks %}
+                <input id="dock-contraint" type="checkbox"  value="{{dock.bh_gm_dock_id}}">&nbsp; {{dock.bh_gm_dock_id}} &nbsp;
+                {% endfor%}
+            </div>
         <button type="submit" class="btn btn-success">Submit</button>
 {#        <button type="reset" class="btn btn-danger">Cancel</button>#}
          <a class="btn btn-danger" href="/tabledata">
@@ -166,15 +172,16 @@ input[readonly='readonly'], input[type=text]{
 						{
 							"title": "Status",
 							"render": function(data, type, row){
-                                return `<button onclick="fillData('${row.fields.city}', '${row.fields.state}', '${row.fields.duns}', '${row.fields.billing_cisco}', '${row.fields.locode}');">Select</button>`
+                                return `<button onclick="fillData('${row.fields.locationid}', '${row.fields.city}', '${row.fields.state}', '${row.fields.duns}', '${row.fields.billing_cisco}', '${row.fields.locode}');">Select</button>`
 							}
 						},
 					],
 				});
 		});
 
-        function fillData(city, state, duns, billing_cisco, locode){
-            console.log(duns, city, state, billing_cisco, locode);
+        function fillData(locationid, city, state, duns, billing_cisco, locode){
+            console.log(locationid, duns, city, state, billing_cisco, locode);
+            $("#location-id").val(locationid)
             $("#id_city").val(city)
             $("#id_state").val(state)
             $("#id_location_code").val(locode)
