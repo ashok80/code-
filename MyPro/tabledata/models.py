@@ -87,6 +87,10 @@ class Location(models.Model):
         verbose_name = "Location"
         verbose_name_plural = "Locations"
 
+    def save(self, *args, **kwargs):
+        self.locationid = self.location_id
+        super(Location, self).save(*args, **kwargs)
+
 
 class DQ_FAILURE(models.Model):
     dq_failure_id = models.AutoField(primary_key=True)

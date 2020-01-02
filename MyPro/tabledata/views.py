@@ -77,8 +77,13 @@ class EditBHGMDock(View):
             data = BH_GM_DOCK.objects.get(bh_gm_dock_id=id)
             form = BHGMDOCKForm(instance=data)
 
+            if data.location:
+                try:
+                    dock_with_same_location = BH_GM_DOCK.objects.filter(location=data.location)
+                except BH_GM_DOCK.DoesNotExist:
+                    pass
             try:
-                return render(request, 'tabledata/edit.html', context={"rows": data, 'form': form})
+                return render(request, 'tabledata/edit.html', context={"rows": data, 'form': form, 'similar_docks': dock_with_same_location})
             except IndexError:
                 return render(request, 'tabledata/404.html')
 
@@ -99,7 +104,14 @@ class EditBHGMDock(View):
             else:
                 dock_bump_yn = None
 
+            location_id = request.POST.get("location-id")
+            try:
+                location_model_instance = Location.objects.get(locationid=location_id)
+            except Location.DoesNotExist:
+                print("Location does not exists with the {} locationid".format(location_id))
+
             model_instance = BH_GM_DOCK.objects.get(bh_gm_dock_id=id)
+            model_instance.location = location_model_instance
 
             model_instance.billing_cisco=request.POST.get('billing_cisco')
             model_instance.location_code=request.POST.get('location_code')
