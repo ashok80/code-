@@ -51,8 +51,20 @@
                         <td>{{row|get_item:"dock_code"}} </td>
                         <td>{{row|get_item:"simplified_dock"}} </td>
                         <td>{{row|get_item:"no_of_shifts"}} </td>
-                        <td>{{row|get_item:"drop_deck_allowed_yn"}} </td>
-                        <td>{{row|get_item:"dock_bump_yn"}} </td>
+                        {% if row|get_item:"drop_deck_allowed_yn" == true %}
+                            <td>Y</td>
+                        {% elif row|get_item:"drop_deck_allowed_yn" == false %}
+                            <td>N</td>
+                        {% else %}
+                            <td> --- </td>
+                        {% endif %}
+                        {% if row|get_item:"dock_bump_yn" == true %}
+                            <td>Y</td>
+                        {% elif row|get_item:"dock_bump_yn" == false %}
+                            <td>N</td>
+                        {% else %}
+                            <td>----</td>
+                        {% endif %}
                         <td>{{row|get_item:"max_dock_bumps_allowed"}} </td>
                         <td>{{row|get_item:"date_entered"}} </td>
                         <td>{{row|get_item:"notes"}} </td>
