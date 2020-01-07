@@ -95,9 +95,12 @@ input[readonly='readonly'], input[type=text]{
         <hr class='bold-hr'>
             <div>
                 <label>Dock Constraints</label><br>
-                {% for dock in similar_docks %}
-                <input name="dock-constraint" id="dock-constraint" type="checkbox"  value="{{dock.bh_gm_dock_id}}">&nbsp; {{dock.dock_code}} &nbsp;
-                {% endfor%}
+                {% if similar_docks.count == 1 %}
+                {% else %}
+                    {% for dock in similar_docks %}
+                    <input name="dock-constraint" id="dock-constraint" type="checkbox"  value="{{dock.bh_gm_dock_id}}">&nbsp; {{dock.dock_code}} &nbsp;
+                    {% endfor%}
+                {% endif %}
             </div>
         <div class="text-center">
             <button type="submit" class="btn btn-success">Save</button>

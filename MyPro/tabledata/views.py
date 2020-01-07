@@ -85,7 +85,7 @@ class EditBHGMDock(View):
                 except BH_GM_DOCK.DoesNotExist:
                     pass
             try:
-                return render(request, 'tabledata/edit.html', context={"rows": data, 'form': form, 'similar_docks': dock_with_same_location.reverse()})
+                return render(request, 'tabledata/edit.html', context={"rows": data, 'form': form, 'similar_docks': dock_with_same_location})
             except IndexError:
                 return render(request, 'tabledata/404.html')
 
