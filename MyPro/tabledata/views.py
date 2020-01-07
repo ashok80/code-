@@ -80,8 +80,7 @@ class EditBHGMDock(View):
             dock_with_same_location = None
             if data.location:
                 try:
-                    dock_with_same_location = BH_GM_DOCK.objects.filter(location=data.location)
-                    print(dock_with_same_location.reverse())
+                    dock_with_same_location = BH_GM_DOCK.objects.filter(location=data.location).exclude(bh_gm_dock_id=id)
                 except BH_GM_DOCK.DoesNotExist:
                     pass
             try:
@@ -134,6 +133,8 @@ class EditBHGMDock(View):
             model_instance.save()
 
             compatibles = list(request.POST.getlist('dock-constraint'))
+            print(compatibles)
+
             model_instance = BH_GM_DOCK.objects.get(bh_gm_dock_id=id)
 
             for compatible in compatibles:
