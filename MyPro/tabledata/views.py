@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE, BH_GM_Constraint_Dock
 from tabledata.forms import BHGMDOCKForm
 from django.core import serializers
+from tabledata.resources import DQ_FAILUREResource
 
 
 class Home(View):
@@ -52,19 +53,11 @@ class Home(View):
 class DownloadDQFaliure(View):
 
     def get(self, request):
-        records = DQ_FAILURE.objects.all()
-        with open("DQ_FAILURE.csv", "w") as myfile:
-            wr = csv.writer(myfile)
-            wr.writerow(["ID", "Batch ID", "Entity ID", "Entity", "Business rule", "Creation Date", "DQ Dimension", "Column Value", "Fixed YN", "Fixed Date", "Source",
-                        "Column Name", "Error Code", "Table Name", "Frequency ", "Master Load ID", "Transaction Date", "Alt Error Code"])
-            for i in records:
-                wr.writerow([i.dq_failure_id, i.batchid, i.entity_id, i.business_rule, i.create_date, i.dq_dimension, i.column_value, i.fixed_yn, i.fixed_date, i.source,
-                            i.column_name, i.error_code, i.table_name, i.frequency, i.master_load_id, i.transaction_date, i.alt_error_code])
-
-        with open("DQ_FAILURE.csv") as myfile2:
-            response = HttpResponse(myfile2, content_type="text/csv")
-            response['Content-Disposition'] = 'attachment; filename=DQ_FAILURE.csv'
-            return response
+        resource_object = DQ_FAILUREResource()
+        export = resource_object.export()
+        response = HttpResponse(export.csv, content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename=DQ_FAILURE.csv'
+        return response
 
 
 class EditBHGMDock(View):

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'djcelery',
     'django_celery_results',
     'tabledata',
+    'import_export',
 ]
 
 
@@ -162,3 +163,6 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers:DatabaseScheduler'
+
+# import export
+IMPORT_EXPORT_USE_TRANSACTIONS = True
