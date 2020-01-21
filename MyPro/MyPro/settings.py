@@ -39,10 +39,9 @@ INSTALLED_APPS = [
     'MyPro',
     'App',
     'crispy_forms',
-    'djcelery',
-    'django_celery_results',
     'tabledata',
     'import_export',
+    'background_task'
 ]
 
 
