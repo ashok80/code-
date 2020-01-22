@@ -12,3 +12,9 @@ class CodeMapForm(ModelForm):
     class Meta:
         model = Codemap
         fields = '__all__'
+
+
+class CodeMapEditForm(ModelForm):
+    class Meta:
+        model = Codemap
+        fields = ('input_value', 'output_value', )

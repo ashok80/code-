@@ -4,7 +4,7 @@ from django.views import View
 from django.shortcuts import render, redirect, HttpResponse, render_to_response
 from django.http import HttpResponse
 from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE, BH_GM_Constraint_Dock, Codemap
-from tabledata.forms import BHGMDOCKForm, CodeMapForm
+from tabledata.forms import BHGMDOCKForm, CodeMapForm, CodeMapEditForm
 from django.core import serializers
 from tabledata.resources import DQ_FAILUREResource
 
@@ -225,17 +225,15 @@ class EditCodeMap(View):
 
     def get(self, request, id):
         cmap = Codemap.objects.get(code_map_id=id)
-        form = CodeMapForm(instance=cmap)
-        return render(request, self.template_name, context={'form': form})
+        form = CodeMapEditForm(instance=cmap)
+        return render(request, self.template_name, context={'form': form, 'row': cmap})
 
     def post(self, request, id):
-        form = CodeMapForm(request.POST)
+        form = CodeMapEditForm(request.POST)
         if form.is_valid():
             codemap_instance = Codemap.objects.get(code_map_id=id)
             codemap_instance.input_value = request.POST.get('input_value')
             codemap_instance.output_value = request.POST.get('output_value')
-            codemap_instance.display_label = request.POST.get('display_label')
-            codemap_instance.type = request.POST.get('type')
             try:
                 codemap_instance.save()
                 return redirect('code-map-view')

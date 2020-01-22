@@ -3,22 +3,49 @@
 {% load static %}
 
 {% block content %}
-	<table class="table table-bordered" id="tableData">
-		<tr>
-			<th>ID</th>
-			<th>Input Value</th>
-			<th>Output Value</th>
-			<th>Display Label</th>
-            <th>Edit</th>
-		</tr>
-		{% for row in rows %}
-                    <tr>
-                        <td>{{row.code_map_id}}</td>
-                        <td>{{row.input_value}}</td>
-                        <td>{{row.output_value}}</td>
-                        <td>{{row.display_label}}</td>
-                        <td><a href="{% url 'edit-code-map' id=row.code_map_id %}"><i class="fas fa-pencil-alt"></i></a></td>
-                    </tr>
-        {% endfor %}
-	</table>
+<br><br>
+<div class="text-center alert alert-primary" role="alert">
+    Code Map
+</div>
+<br><br>
+<a href="{% url 'add-code-map' %}" class="btn btn-primary pull-right">Add &nbsp;&nbsp;<i class="fas fa-plus"></i></a>
+<br><br>
+
+<div class="row">
+    <div style='background-color: grey;' class="col-2">
+        <strong>Type</strong>
+        <ul>
+            {% for row in rows %}
+                <li>{{row.type}}</li>
+            {% endfor %}
+        </ul>
+        <strong>Display Label</strong>
+        <ul>
+            {% for row in rows %}
+                <li>{{row.display_label}}</li>
+            {% endfor %}
+        </ul>
+        <strong>
+    </div>
+    <div class="w-100 col-8">
+        <table class="table table-bordered" id="tableData">
+            <tr>
+                <th>ID</th>
+                <th>Input Value</th>
+                <th>Output Value</th>
+                <th>Display Label</th>
+                <th>Edit</th>
+            </tr>
+            {% for row in rows %}
+                        <tr>
+                            <td>{{row.code_map_id}}</td>
+                            <td>{{row.input_value}}</td>
+                            <td>{{row.output_value}}</td>
+                            <td>{{row.display_label}}</td>
+                            <td><a href="{% url 'edit-code-map' id=row.code_map_id %}"><i class="fas fa-pencil-alt"></i></a></td>
+                        </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 {% endblock %}

@@ -6,6 +6,9 @@
 <div class="text-center alert alert-primary" role="alert">
     Code Map Edit
 </div>
+<div class="text-center alert alert-primary" role="alert">
+    <strong>Type</strong>&nbsp;&nbsp;&nbsp;{{row.type}} &nbsp;&nbsp;&nbsp; <strong>Display Label<strong>&nbsp;&nbsp;&nbsp;{{row.display_label}}</strong>
+</div>
 <form method="post" action="">
     {{form.errors}}
     {% csrf_token %}
