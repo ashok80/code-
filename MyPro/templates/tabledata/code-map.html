@@ -1,0 +1,24 @@
+{% extends 'tabledata/base.html' %}
+
+{% load static %}
+
+{% block content %}
+	<table class="table table-bordered" id="tableData">
+		<tr>
+			<th>ID</th>
+			<th>Input Value</th>
+			<th>Output Value</th>
+			<th>Display Label</th>
+            <th>Edit</th>
+		</tr>
+		{% for row in rows %}
+                    <tr>
+                        <td>{{row.code_map_id}}</td>
+                        <td>{{row.input_value}}</td>
+                        <td>{{row.output_value}}</td>
+                        <td>{{row.display_label}}</td>
+                        <td><a href="{% url 'edit-code-map' id=row.code_map_id %}"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+        {% endfor %}
+	</table>
+{% endblock %}

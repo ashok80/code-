@@ -1,0 +1,15 @@
+{% extends 'tabledata/base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="text-center alert alert-primary" role="alert">
+    Add Codemap 
+</div>
+<form class="form-group" action="" method="post">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE, BH_GM_Constraint_Dock
+from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE, BH_GM_Constraint_Dock, Codemap
 
 
 class BH_GM_DOCKAdmin(admin.ModelAdmin):
@@ -13,3 +13,4 @@ admin.site.register(DQ_FAILURE)
 admin.site.register(BH_GM_DOCK, BH_GM_DOCKAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(BH_GM_Constraint_Dock)
+admin.site.register(Codemap)

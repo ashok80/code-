@@ -118,3 +118,13 @@ class BH_GM_Constraint_Dock(models.Model):
 
     def __str__(self):
         return "Origin - {} | compatible {}".format(self.bh_origin_id, self.bh_compatible_dock_id)
+
+class Codemap(models.Model):
+    code_map_id = models.IntegerField(db_column='CODE_MAP_ID')  # Field name made lowercase.
+    type = models.CharField(db_column='TYPE', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    input_value = models.CharField(db_column='INPUT_VALUE', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    output_value = models.CharField(db_column='OUTPUT_VALUE', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    display_label = models.CharField(db_column='DISPLAY_LABEL', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        db_table = 'CODEMAP'

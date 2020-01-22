@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tabledata.views import Home, DownloadDQFaliure, EditBHGMDock, AddBHGMDock, ViewBHGMDock, SearchLocation
+from tabledata.views import Home, DownloadDQFaliure, EditBHGMDock, AddBHGMDock, ViewBHGMDock, SearchLocation, CodeMapView, EditCodeMap, AddCodeMap
 
 urlpatterns = [
     path('', Home.as_view()),
@@ -23,5 +23,8 @@ urlpatterns = [
     path('add/', AddBHGMDock.as_view(), name='add_view'),
     path('view/<int:id>/', ViewBHGMDock.as_view(), name='view_view'),
     path('search-location/', SearchLocation.as_view(), name='location-search'),
-    path('dq-download/', DownloadDQFaliure.as_view()),
+    path('dq-download/', DownloadDQFaliure.as_view(), name='dq-download-view'),
+    path('codemap', CodeMapView.as_view(), name='code-map-view'),
+    path('code-map-edit/<int:id>', EditCodeMap.as_view(), name='edit-code-map'),
+    path('code-map-add', AddCodeMap.as_view(), name='add-code-map'),
 ]
