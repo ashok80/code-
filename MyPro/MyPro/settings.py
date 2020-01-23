@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'tabledata',
     'import_export',
-    'background_task'
+    'background_task',
+    'djangoformsetjs',
 ]
 
 
