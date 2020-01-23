@@ -18,3 +18,10 @@ class CodeMapEditForm(ModelForm):
     class Meta:
         model = Codemap
         fields = ('input_value', 'output_value', )
+
+
+class CodeMapFinal(ModelForm):
+    class Meta:
+        model = Codemap
+        fields = ('input_value', 'output_value',)
+
