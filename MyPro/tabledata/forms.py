@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from tabledata.models import BH_GM_DOCK, Codemap
+from django.forms import TextInput
 
 
 class BHGMDOCKForm(ModelForm):
@@ -8,11 +9,13 @@ class BHGMDOCKForm(ModelForm):
         fields = '__all__'
 
 
-class CodeMapForm(ModelForm):
+class CodeMapFinal(ModelForm):
     class Meta:
         model = Codemap
-        fields = '__all__'
-
+        widgets = {
+            'code_map_id': TextInput(attrs={'readonly': 'readonly'}),
+        }
+        fields = ('input_value', 'output_value', 'code_map_id')
 
 class CodeMapEditForm(ModelForm):
     class Meta:

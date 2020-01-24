@@ -4,5 +4,6 @@ __pycache__
 *.*.swo
 *.*.swn
 *.*.swm
+*.*.swl
 .idea
 *.sqlite3

@@ -4,7 +4,7 @@ from django.views import View
 from django.shortcuts import render, redirect, HttpResponse, render_to_response
 from django.http import HttpResponse
 from tabledata.models import BH_GM_DOCK, Location, DQ_FAILURE, BH_GM_Constraint_Dock, Codemap
-from tabledata.forms import BHGMDOCKForm, CodeMapForm, CodeMapEditForm, CodeMapFinal
+from tabledata.forms import BHGMDOCKForm, CodeMapFinal
 from django.core import serializers
 from tabledata.resources import DQ_FAILUREResource
 from django.forms import modelformset_factory
@@ -219,51 +219,10 @@ class CodeMapView(View):
     def get(self, request):
         codemap = Codemap.objects.all()
         codemap_formset = modelformset_factory(Codemap, form=CodeMapFinal)
-        return render(request, self.template_name, context={'rows': codemap, 'form': codemap_formset()})
+        return render(request, self.template_name, context={'rows': codemap, 'formset': codemap_formset})
 
     def post(self, request):
-        form = CodeMapEditForm(request.POST)
-        if form.is_valid():
-            codemap_instance = Codemap.objects.get(code_map_id=request.POST.get('id'))
-            codemap_instance.input_value = request.POST.get('input_value')
-            codemap_instance.output_value = request.POST.get('output_value')
-            try:
-                codemap_instance.save()
-                return redirect('code-map-view')
-            except Exception as e:
-                print(e)
-
-
-class EditCodeMap(View):
-    template_name = 'tabledata/code-map-edit.html'
-
-    def get(self, request, id):
-        cmap = Codemap.objects.get(code_map_id=id)
-        form = CodeMapEditForm(instance=cmap)
-        return render(request, self.template_name, context={'form': form, 'row': cmap})
-
-    def post(self, request, id):
-        form = CodeMapEditForm(request.POST)
-        if form.is_valid():
-            codemap_instance = Codemap.objects.get(code_map_id=id)
-            codemap_instance.input_value = request.POST.get('input_value')
-            codemap_instance.output_value = request.POST.get('output_value')
-            try:
-                codemap_instance.save()
-                return redirect('code-map-view')
-            except Exception as e:
-                print(e)
-
-class AddCodeMap(View):
-    template_name = 'tabledata/add-codemap.html'
-
-    def get(self, request):
-        form = CodeMapForm()
-        return render(request, self.template_name, context={'form': form})
-
-    def post(self, request):
-        form = CodeMapForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('code-map-view')
-
+        formset = CodeMapFinal(request.POST)
+        if formset.is_valid():
+            formset.save()
+        return HttpResponse("asdasdf")

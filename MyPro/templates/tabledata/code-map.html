@@ -4,7 +4,6 @@
 {% load crispy_forms_tags %}
 
 
-
 {% block priorityjs %}
 <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
 {% endblock %}
@@ -15,11 +14,10 @@
 	Code Map
 </div>
 <br><br>
-<a href="{% url 'add-code-map' %}" class="btn btn-primary pull-right">Add &nbsp;&nbsp;<i class="fas fa-plus"></i></a>
 <br><br>
 
 <div class="row">
-	<div style='background-color: grey;' class="col-2">
+	<div style='background-color: #f2f2f2;' class="col-2">
 		<strong>Type</strong>
 		<ul>
 			{% for row in rows %}
@@ -34,43 +32,71 @@
 		</ul>
 	</div>
 	<div class="w-100 col-4">
-        <table class="table table-bordered">
-            <tr>
-                <th>Index</th>
-                <th>Type</th>
-                <th>Input Value</th>
-                <th>Output Value</th>
-                <th>Display Label</th>
-            </tr>
-            <tbody class='table-body'>
-            {% for row in rows %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{row.type}}</td>
-                    <td>{{row.input_value}}</td>
-                    <td>{{row.output_value}}</td>
-                    <td>{{row.display_label}}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+		<table class="table table-bordered">
+			<tr>
+				<th>Index</th>
+				<th>Type</th>
+				<th>Input Value</th>
+				<th>Output Value</th>
+				<th>Display Label</th>
+			</tr>
+			<tbody class='table-body'>
+				{% for row in rows %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{row.type}}</td>
+					<td>{{row.input_value}}</td>
+					<td>{{row.output_value}}</td>
+					<td>{{row.display_label}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
+</div>
+<div id="form-div" hidden="hidden">
+<h3>Code Map</h3>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div id="form_set">
+        {% for form in formset %}
+            {{form.non_field_errors}}
+            {{form.errors}}
+            <table class='no_error'>
+                {{ form }}
+            </table>
+        {% endfor %}
+    </div>
+    <input type="button" class="btn btn-primary" value="Add More" id="add_more">
+    <button type="submit" class="btn btn-success">Save</button>
+    <div id="empty_form" style="display:none">
+        <table class='no_error'>
+            {{ formset.empty_form }}
+        </table>
+    </div>
+</form>
 </div>
 {% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript">
-function show_type_specific(id){
-    var rows = $(".table").rows.length;
-}
+$('#add_more').click(function() {
+	var form_idx = $('#id_form-TOTAL_FORMS').val();
+	$('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+});
+</script>
+
+<script type="text/javascript">
+	function show_type_specific(id){
+		$(".table").find(`tr:eq(${id})`).remove();
+		$("#form-div").attr("hidden", false);
+	}
 
 function show_display_specific(id){
-    if (id == 1){
-        $(".table").find(`tr:lt(${id})`).remove();
-    }else{
-        $(".table").find(`tr:gt(${id})`).remove();
-    }
+    $(".table").find(`tr:eq(${id})`).remove();
+    $("#form-div").attr("hidden", false);
 }
-
 </script>
 {% endblock %}
