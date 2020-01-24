@@ -215,14 +215,24 @@ class SearchLocation(View):
 
 class CodeMapView(View):
     template_name = 'tabledata/code-map.html'
-
+    
     def get(self, request):
-        codemap = Codemap.objects.all()
-        codemap_formset = modelformset_factory(Codemap, form=CodeMapFinal)
-        return render(request, self.template_name, context={'rows': codemap, 'formset': codemap_formset})
+        codemap_formset = modelformset_factory(Codemap,
+                                           form=CodeMapFinal,
+                                               extra=1)
+        return render(request, self.template_name, context={'rows': Codemap.objects.all(),
+                                                            'formset': codemap_formset})
 
     def post(self, request):
-        formset = CodeMapFinal(request.POST)
+        print(request.POST)
+        codemap_formset = modelformset_factory(Codemap,
+                                               form=CodeMapFinal)
+        formset = codemap_formset(request.POST)
         if formset.is_valid():
-            formset.save()
+            instances = formset.save(commit=True)
+            for instance in instances:
+                print("instance is %s" % instance)
+        else:
+            print("errors are %s" % formset.errors)
+                
         return HttpResponse("asdasdf")
