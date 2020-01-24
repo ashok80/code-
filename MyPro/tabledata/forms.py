@@ -12,19 +12,4 @@ class BHGMDOCKForm(ModelForm):
 class CodeMapFinal(ModelForm):
     class Meta:
         model = Codemap
-        widgets = {
-            'code_map_id': TextInput(attrs={'readonly': 'readonly'}),
-        }
-        fields = ('input_value', 'output_value', 'code_map_id')
-
-class CodeMapEditForm(ModelForm):
-    class Meta:
-        model = Codemap
-        fields = ('input_value', 'output_value', )
-
-
-class CodeMapFinal(ModelForm):
-    class Meta:
-        model = Codemap
-        fields = ('input_value', 'output_value',)
-
+        fields = ('id', 'input_value', 'output_value')
