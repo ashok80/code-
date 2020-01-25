@@ -89,13 +89,18 @@ $('#add_more').click(function() {
 </script>
 
 <script type="text/javascript">
-	function show_type_specific(id){
-		$(".table").find(`tr:eq(${id})`).remove();
+	function show_type_specific(idToKeep){
+        console.log(idToKeep);
+        $(".table-body > tr").filter(function(index) {
+            return index !== 0 && $(this.firstElementChild).text().trim() != idToKeep;
+        }).remove();
 		$("#form-div").attr("hidden", false);
 	}
 
-function show_display_specific(id){
-    $(".table").find(`tr:eq(${id})`).remove();
+function show_display_specific(idToKeep){
+    $("table.table > tbody > tr").filter(function(index) {
+        return index !== 0 && $(this.firstElementChild).text().trim() != idToKeep;
+    }).remove();
     $("#form-div").attr("hidden", false);
 }
 </script>
