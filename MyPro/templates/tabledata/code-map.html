@@ -18,24 +18,17 @@
 
 <div class="row">
 	<div style='background-color: #f2f2f2;' class="col-2">
-		<strong>Type</strong>
-		<ul>
-			{% for row in rows %}
-			<li><a href="#" onclick="show_type_specific({{row.code_map_id}})">{{row.type}}</a></li>
-			{% endfor %}
-		</ul>
 		<strong>Display Label</strong>
 		<ul>
 			{% for row in rows %}
-			<li><a href="#" onclick="show_display_specific({{row.code_map_id}})">{{row.display_label}}</a></li>
+			<li><a href="#" onclick="show_display_specific('{{row.display_label}}')">{{row.display_label}}</a></li>
 			{% endfor %}
 		</ul>
 	</div>
 	<div class="w-100 col-4">
 		<table class="table table-bordered">
 			<tr>
-				<th>Index</th>
-				<th>Type</th>
+				<th hidden="hidden">Index</th>
 				<th>Input Value</th>
 				<th>Output Value</th>
 				<th>Display Label</th>
@@ -43,8 +36,6 @@
 			<tbody class='table-body'>
 				{% for row in rows %}
 				<tr>
-					<td>{{forloop.counter}}</td>
-					<td>{{row.type}}</td>
 					<td>{{row.input_value}}</td>
 					<td>{{row.output_value}}</td>
 					<td>{{row.display_label}}</td>
@@ -89,19 +80,24 @@ $('#add_more').click(function() {
 </script>
 
 <script type="text/javascript">
-	function show_type_specific(idToKeep){
-        console.log(idToKeep);
-        $(".table-body > tr").filter(function(index) {
+    function show_display_specific(idToKeep){
+        /*$("table.table > tbody > tr").filter(function(index) {
             return index !== 0 && $(this.firstElementChild).text().trim() != idToKeep;
-        }).remove();
-		$("#form-div").attr("hidden", false);
-	}
+        }).remove();*/
+        var table = $(".table tbody");
 
-function show_display_specific(idToKeep){
-    $("table.table > tbody > tr").filter(function(index) {
-        return index !== 0 && $(this.firstElementChild).text().trim() != idToKeep;
-    }).remove();
-    $("#form-div").attr("hidden", false);
-}
+		table.find('tr').each(function (i) {
+			var $tds = $(this).find('td'),
+				input_val = $tds.eq(0).text(),
+				ouput_val = $tds.eq(1).text(),
+				display_label = $tds.eq(2).text();
+            if (display_label == idToKeep){
+                console.log("this works can you belive it ", display_label);
+            }else{
+                $tds.remove()
+            }
+		});
+        $("#form-div").attr("hidden", false);
+    }
 </script>
 {% endblock %}

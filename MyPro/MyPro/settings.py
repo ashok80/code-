@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'MyPro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ashok_mypro_dev_naresh',
+        'NAME': 'ashok_mypro_dev',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -166,3 +166,4 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers:DatabaseScheduler'
 
 # import export
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 102400
