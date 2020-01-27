@@ -92,9 +92,10 @@ $('#add_more').click(function() {
 				ouput_val = $tds.eq(1).text(),
 				display_label = $tds.eq(2).text();
             if (display_label == idToKeep){
+                $tds.attr("hidden", false);
                 console.log("this works can you belive it ", display_label);
             }else{
-                $tds.remove()
+                $tds.attr("hidden", true);
             }
 		});
         $("#form-div").attr("hidden", false);
