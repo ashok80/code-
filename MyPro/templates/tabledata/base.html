@@ -4,6 +4,15 @@
     <head>
         <title>Tabledata</title>
 
+        <style>
+        a:link {
+            color: #000000 !important;
+        }
+
+        a:visited{
+            color: #4d79ff !important;
+        }
+        </style>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/9920048f03.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.js"
@@ -15,8 +24,6 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
         <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" type="text/javascript"></script>
-        {% block extra_css %}
-        {% endblock %}
         {% block priorityjs %}
         {% endblock %}
     </head>
