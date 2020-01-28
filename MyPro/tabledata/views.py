@@ -215,13 +215,19 @@ class SearchLocation(View):
 
 class CodeMapView(View):
     template_name = 'tabledata/code-map.html'
-    
+
     def get(self, request):
+        type = request.GET.get('type','Carrier')
+
         codemap_formset = modelformset_factory(Codemap,
                                            form=CodeMapFinal,
                                                extra=1)
-        return render(request, self.template_name, context={'rows': Codemap.objects.all(),
-                                                            'formset': codemap_formset})
+        distinct_labels = Codemap.objects.filter(display_label__isnull=False).values('type', 'display_label').distinct().order_by('display_label')
+
+        data = Codemap.objects.filter(type=type).order_by('display_label')
+        form_data = codemap_formset(queryset=data)
+        return render(request, self.template_name, context={'rows': data,'labels':distinct_labels,
+                                                            'formset': form_data})
 
     def post(self, request):
         print(request.POST)
@@ -234,5 +240,4 @@ class CodeMapView(View):
                 print("instance is %s" % instance)
         else:
             print("errors are %s" % formset.errors)
-                
         return HttpResponse("asdasdf")
