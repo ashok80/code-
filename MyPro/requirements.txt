@@ -6,7 +6,7 @@ celery==3.1.26.post2
 decorator==4.4.0
 defusedxml==0.6.0
 diff-match-patch==20181111
-Django==2.1.15
+Django==2.2.13
 django-background-tasks==1.2.5
 django-celery==3.3.1
 django-celery-results==1.1.2
